@@ -31,11 +31,31 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   let templateVars = {shortURL: req.params.id, longURL: urlDatabase[req.params.id]};
   res.render("urls_show", templateVars);
+})
+
+app.get("/u/:shortURL", (req, res) => {
+  let longURL = urlDatabase[req.params.shortURL]
+  res.redirect(longURL);
 });
 
 app.get("/hello", (req, res) => {eq.params.id
   res.end("<html><body>Hello <b>World</b></body></html>\n");
-})8080
+})
+
+app.post("/urls", (req, res) => {
+  const errors = [];
+  if (!req.body.longURL) {
+    errors.push('URL is required!')
+  }
+
+  if (errors.length > 0) {
+    res.status('404')
+    res.end('No URL inputed! Please go back!')
+  } else {
+    urlDatabase[generateRandomString()] = req.body.longURL;
+    res.send("Ok");
+  } 
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
@@ -43,5 +63,11 @@ app.listen(PORT, () => {
 
 
 function generateRandomString() {
-  
+  var text = "";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 6; i++)
+    text += characters.charAt(Math.floor(Math.random() * characters.length));
+
+  return text;
 }
