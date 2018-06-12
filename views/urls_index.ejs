@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>TinyApp</title>
+</head>
+
+<body>
+
+  <header>
+    <% include ./partials/_header.ejs %>
+  </header>
+
+  <table>
+  <tr>
+    <th>
+      URLs
+    </th>
+  </tr>
+
+  <% for (let key in urls){ %>
+    <tr>
+      <td><%- key%> </td>
+      <td><%- urls[key]%> </td>
+    </tr>
+
+  <%}%>
+
+     <tr>
+      <td>
+        Shorten a new URL!
+      </td>
+    </tr>
+
+
+
+  </table>
+
+</body>
+
+
+</html>
