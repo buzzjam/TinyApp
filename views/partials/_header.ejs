@@ -4,17 +4,25 @@
   <title></title>
 </head>
 <body>
-
   <header>
-    <form action="/login" method="POST">
+  <% if (username) {%>
+    <div>
+      <form action ="/logout" method ="POST">
+        Logged in as <%=username%>s
+        <input type="submit" value='Logout'>
+      </form>
+    </div>
+  <%} else {%>
+     <form action="/login" method="POST">
       <div>
         <label for="name">Username: </label>
         <input type="text" id="name" name="username"/>
-        <input type="submit" value="Enter" />
+        <input type="submit" value="Login" />
       </div>
-   
   </form>
-  </header>
+      
+      <%}%>
+</header>
 
 </body>
 </html>
