@@ -12,8 +12,14 @@
 
   <div>Shortened URL: <b><%=shortURL%></b></div>
 
-  <div>Full URL: <b><%=longURL%></b></div>
-  
+  <form action="/urls/<%= shortURL %>" method="POST">
+    <div>
+      <label for="name">Full URL:</label>
+      <input type="text" id="name" name="name" placeholder="<%= longURL %>" />
+    </div>
+    <input type="submit" value="Update URL" />
+  </form>
+
   
 
 

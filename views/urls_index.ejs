@@ -22,6 +22,7 @@
     <tr>
       <td><%= key%> </td>
       <td><%= urls[key]%> </td>
+      <td><a href="/urls/<%= key%>">Edit</a></td>
       <form method="POST" action="/urls/<%=key%>/delete"><td><button onclick="">Delete</button></td></form>
     </tr>
 
@@ -29,7 +30,7 @@
 
      <tr>
       <td>
-        <a href="">Shorten a new URL!</a>
+        <a href="/urls/new">Shorten a new URL!</a>
       </td>
     </tr>
 

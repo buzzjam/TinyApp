@@ -3,13 +3,17 @@ const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.set("view engine", "ejs");
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+const findURL = id => {
+  const url = urlDatabase.filter(url => url.id === id)
+  return url
+}
 
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -49,12 +53,18 @@ app.post("/urls", (req, res) => {
   }
 urlDatabase
   if (errors.length > 0) {
-    res.status('404')
+    res.statuls/s('404')
     res.end('No URL inputed! Please go back!')
   } else {
     urlDatabase[generateRandomString()] = req.body.longURL;
-    res.send("Ok");
+    res.redirect(`/urls/`);
   } 
+});
+
+app.post("/urls/:id", (req, res) => {
+  let id = req.params.id
+  urlDatabase[id] = req.body.name;
+  res.redirect(`/urls/`);
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -62,6 +72,8 @@ app.post("/urls/:id/delete", (req, res) => {
   delete urlDatabase[id];
   res.redirect(`/urls/`);
 });
+
+
 
 
 app.listen(PORT, () => {
