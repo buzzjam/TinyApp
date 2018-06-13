@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-
 <html>
 <head>
   <title>TinyApp</title>
@@ -21,19 +20,18 @@
 
   <% for (let key in urls){ %>
     <tr>
-      <td><%- key%> </td>
-      <td><%- urls[key]%> </td>
+      <td><%= key%> </td>
+      <td><%= urls[key]%> </td>
+      <form method="POST" action="/urls/<%=key%>/delete"><td><button onclick="">Delete</button></td></form>
     </tr>
 
   <%}%>
 
      <tr>
       <td>
-        Shorten a new URL!
+        <a href="">Shorten a new URL!</a>
       </td>
     </tr>
-
-
 
   </table>
 

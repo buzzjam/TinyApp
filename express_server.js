@@ -47,7 +47,7 @@ app.post("/urls", (req, res) => {
   if (!req.body.longURL) {
     errors.push('URL is required!')
   }
-
+urlDatabase
   if (errors.length > 0) {
     res.status('404')
     res.end('No URL inputed! Please go back!')
@@ -56,6 +56,13 @@ app.post("/urls", (req, res) => {
     res.send("Ok");
   } 
 });
+
+app.post("/urls/:id/delete", (req, res) => {
+  let id = req.params.id
+  delete urlDatabase[id];
+  res.redirect(`/urls/`);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
