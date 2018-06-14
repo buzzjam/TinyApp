@@ -11,10 +11,37 @@ const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
-
+const userDatabase = { 
+  "User1": {
+    id: "User1", 
+    email: "user@example.com", 
+    password: "password"
+  },
+ "User2": {
+    id: "User2", 
+    email: "user2@example.com", 
+    password: "password"
+  }
+}
 const findURL = id => {
-  const url = urlDatabase.filter(url => url.id === id)
+  const url = urlDatabase.filter(url => url.id ===
+ id)
   return url
+}
+
+function findUser(){
+  for (let index in userDatabase)
+    return userDatabase[index].id;
+  }
+
+function generateRandomString() {
+  var text = "";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 6; i++)
+    text += characters.charAt(Math.floor(Math.random() * characters.length));
+
+  return text;
 }
 
 app.get("/", (req, res) => {
@@ -24,9 +51,23 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies["username"]
+    user: userDatabase[req.cookies.user_id]
   };
   res.render("urls_index", templateVars);
+});
+
+app.get("/register", (req, res) => {
+  let templateVars = {
+    user: userDatabase[req.cookies.user_id]
+  };
+  res.render("urls_register", templateVars);
+});
+
+app.get("/login", (req, res) => {
+  let templateVars = {
+    user: userDatabase[req.cookies.user_id]
+  };
+  res.render("urls_login", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
@@ -34,14 +75,17 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new", {username: req.cookies["username"]});
+  let templateVars = {
+    user: userDatabase[req.cookies.user_id]
+  };
+  res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id],
-    username: req.cookies["username"]
+    user: userDatabase[req.cookies.user_id]
   };
   res.render("urls_show", templateVars);
 })
@@ -60,9 +104,8 @@ app.post("/urls", (req, res) => {
   if (!req.body.longURL) {
     errors.push('URL is required!')
   }
-urlDatabase
   if (errors.length > 0) {
-    res.statuls/s('404')
+    res.status(404)
     res.end('No URL inputed! Please go back!')
   } else {
     urlDatabase[generateRandomString()] = req.body.longURL;
@@ -83,15 +126,47 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.cookie('username', req.body.username);
-  res.redirect(`/urls/`);
+  if (req.body.email === "" || req.body.password === "") {
+    res.status(400).send("Error input! Go back and check your inputs!");
+  }
+  for (let id in userDatabase) {
+    if ((userDatabase[id].email === req.body.email) && (userDatabase[id].password === req.body.password)) {
+      res.cookie('user_id', userDatabase[id].id);
+      res.redirect(`/urls/`);
+      return;
+    }
+  }
+  res.status(400).send("Error! Go back and check your inputs!");
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect(`/urls/`);
 });
 
+app.post("/register", (req, res) => {
+
+if(req.body.email){
+  for (let id in userDatabase){
+    if(userDatabase[id].email === req.body.email){
+      return res.status(400).send("Email already exists!");
+    }
+  }
+}
+if(!req.body.email || !req.body.password){
+  res.status(400).send("Empty input! Go back and check your inputs!");
+} else {
+    let userID = generateRandomString();
+    userDatabase[userID] = {
+      id: userID,
+      email: req.body.email,
+      password: req.body.password
+    }
+    res.cookie('user_id', userID)
+    console.log(userDatabase)
+    res.redirect(`/urls/`);
+  }
+});
 
 
 app.listen(PORT, () => {
@@ -99,12 +174,3 @@ app.listen(PORT, () => {
 });
 
 
-function generateRandomString() {
-  var text = "";
-  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 6; i++)
-    text += characters.charAt(Math.floor(Math.random() * characters.length));
-
-  return text;
-}
