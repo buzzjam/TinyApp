@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
-var cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
+const bcrypt = require('bcryptjs');
+
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -162,11 +164,12 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  if (req.body.email === "" || req.body.password === "") {
+  const password = req.body.password;
+  if (req.body.email === "" || password === "") {
     res.status(400).send("Error input! Go back and check your inputs!");
   }
   for (let id in userDatabase) {
-    if ((userDatabase[id].email === req.body.email) && (userDatabase[id].password === req.body.password)) {
+    if ((userDatabase[id].email === req.body.email) && bcrypt.compareSync(password, userDatabase[id].password)) {
       res.cookie('user_id', userDatabase[id].id);
       res.redirect(`/urls/`);
       return;
@@ -193,10 +196,12 @@ if(!req.body.email || !req.body.password){
   res.status(400).send("Empty input! Go back and check your inputs!");
 } else {
     let userID = generateRandomString();
+    const password = req.body.password;
+    const hashedPassword = bcrypt.hashSync(password, 10);
     userDatabase[userID] = {
       id: userID,
       email: req.body.email,
-      password: req.body.password
+      password: hashedPassword
     }
     res.cookie('user_id', userID)
     console.log(userDatabase)
