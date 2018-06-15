@@ -10,12 +10,17 @@
   </header>
 
 
-  <div>Shortened URL: <b><%=shortURL%></b></div>
+  <div>Shortened URL: <b>
+    <a href="localhost:8080/u/<%=shortURL%>">
+      localhost:8080/u/<%=shortURL%>
+  </a>
+</b>
+</div>
 
   <form action="/urls/<%= shortURL %>" method="POST">
     <div>
       <label for="name">Full URL:</label>
-      <input type="text" id="name" name="name" placeholder="<%= longURL %>" />
+      <input type="text" id="name" name="longURL" value="<%= longURL %>" />
     </div>
     <input type="submit" value="Update URL" />
   </form>

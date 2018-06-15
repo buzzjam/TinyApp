@@ -4,11 +4,17 @@
   <title>TinyApp Login</title>
 </head>
   <body style="font-size:20px; padding:50px;">
+
+    <header>
+    <% include ./partials/_header.ejs %>
+  </header>
+
+  
     <form action="/login" method="POST" style="margin:0px 150px; padding-top: 100px">
       <label for="longURL">Login Below:</label>
       <div>
         <label for="name">Email: </label>
-        <input id="longURL" type="text" name="email" placeholder="email" style="width: 300px">
+        <input id="longURL" type="email" name="email" placeholder="email" style="width: 300px">
         <label for="name">Password: </label>
         <input id="longURL" type="password" name="password" placeholder="password" style="width: 300px">
         <input type="submit" value="Submit">
