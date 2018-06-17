@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title></title>
+    <title></title>
 </head>
+
 <body>
-  <header>
-  <% if (user) {%>
-    <div>
-      <form action ="/logout" method ="POST">
-        Logged in as <%=user.email%>
-        <input type="submit" value='Logout'>
-      </form>
-    </div>
-  <%} else {%>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-      
-      <%}%>
-</header>
+    <header>
+      <!-- check cookie to determine if logged in -->
+        <% if (user) {%>
+            <div>
+                <form action="/logout" method="POST">
+                    Logged in as
+                    <%=user.email%>
+                        <input type="submit" value='Logout'>
+                </form>
+            </div>
+            <%} else {%>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+
+                <%}%>
+    </header>
 
 </body>
+
 </html>

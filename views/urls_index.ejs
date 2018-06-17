@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
-  <title>TinyApp</title>
+    <title>TinyApp</title>
 </head>
 
 <body>
 
-  <header>
-    <% include ./partials/_header.ejs %>
-  </header>
+    <header>
+        <% include ./partials/_header.ejs %>
+    </header>
 
-  <table>
-  <tr>
-    <th>
-      URLs
-    </th>
-  </tr>
+    <table>
+        <tr>
+            <th>
+                URLs
+            </th>
+        </tr>
 
-  <% for (let key in urls){ %>
-    <tr>
-      <td><%= key%> </td>
-      <td><%= urls[key].longURL%> </td>
-      <td>
-        <a href="/urls/<%= key%>">Edit</a>
-      </td>
-      <form method="POST" action="/urls/<%=key%>/delete"><td><button onclick="">Delete</button></td></form>
-    </tr>
+        <!-- looping through database to insert URLs in table  -->
+        <% for (let key in urls){ %>
+            <tr>
+                <td>
+                    <%= key%>
+                </td>
+                <td>
+                    <%= urls[key].longURL%>
+                </td>
+                <td>
+                    <a href="/urls/<%= key%>">Edit</a>
+                </td>
+                <form method="POST" action="/urls/<%=key%>/delete">
+                    <td><button onclick="">Delete</button></td>
+                </form>
+            </tr>
 
-  <%}%>
+            <%}%>
 
-     <tr>
-      <td>
-        <a href="/urls/new">Shorten a new URL!</a>
-      </td>
-    </tr>
+                <tr>
+                    <td>
+                        <a href="/urls/new">Shorten a new URL!</a>
+                    </td>
+                </tr>
 
-  </table>
+    </table>
 
 </body>
 

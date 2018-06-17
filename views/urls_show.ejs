@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>TinyApp Shortened URL</title>
+    <title>TinyApp Shortened URL</title>
 </head>
+
 <body>
 
-  <header>
-    <% include ./partials/_header.ejs %>
-  </header>
+    <header>
+        <% include ./partials/_header.ejs %>
+    </header>
 
 
-  <div>Shortened URL: <b>
+    <div>Shortened URL: <b>
     <a href="localhost:8080/u/<%=shortURL%>">
       localhost:8080/u/<%=shortURL%>
   </a>
 </b>
-</div>
-
-  <form action="/urls/<%= shortURL %>" method="POST">
-    <div>
-      <label for="name">Full URL:</label>
-      <input type="text" id="name" name="longURL" value="<%= longURL %>" />
     </div>
-    <input type="submit" value="Update URL" />
-  </form>
+
+    <form action="/urls/<%= shortURL %>" method="POST">
+        <div>
+            <label for="name">Full URL:</label>
+            <input type="text" id="name" name="longURL" value="<%= longURL %>" />
+        </div>
+        <input type="submit" value="Update URL" />
+    </form>
 
 </body>
-</html>
 
+</html>

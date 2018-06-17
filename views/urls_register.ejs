@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>TinyApp Registration</title>
+    <title>TinyApp Registration</title>
 </head>
-  <body style="font-size:20px; padding:50px;">
+
+<body style="font-size:20px; padding:50px;">
 
     <header>
-    <% include ./partials/_header.ejs %>
-  </header>
-  
+        <% include ./partials/_header.ejs %>
+    </header>
+
     <form action="/register" method="POST" style="margin:0px 150px; padding-top: 100px">
-      <label for="longURL">Register Below:</label>
-      <div>
-        <label for="name">Email: </label>
-        <input id="longURL" type="email" name="email" placeholder="email" style="width: 300px">
-        <label for="name">Password: </label>
-        <input id="longURL" type="password" name="password" placeholder="password" style="width: 300px">
-        <input type="submit" value="Submit">
-      </div>
+        <label for="longURL">Register Below:</label>
+        <div>
+            <label for="name">Email: </label>
+            <input id="longURL" type="email" name="email" placeholder="email" style="width: 300px">
+            <label for="name">Password: </label>
+            <input id="longURL" type="password" name="password" placeholder="password" style="width: 300px">
+            <input type="submit" value="Submit">
+        </div>
 
     </form>
 
